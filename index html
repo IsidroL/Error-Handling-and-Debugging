@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>Error Handling and Testing</title>
+</head>
+
+<body>
+
+  <form id="myForm" onsubmit="return validateForm()">
+      <label for="name">Name:</label>
+      <input type="text" id="name" name="name">
+
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email">
+
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password">
+
+      <label for="confirmPassword">Confirm Password:</label>
+      <input type="password" id="confirmPassword" name="confirmPassword">
+
+      <input type="submit" value="Submit">
+  </form>
+
+  <script>
+
+    function calculateArea(width, height) {
+      return width * height;
+    }
+
+    function getUserAge(user) {
+      try {
+          return user.age;
+      } catch (error) {
+          console.error('Error in getUserAge:', error.message);
+          return null;
+      }
+    }
+
+    function calculateDiscount(price, discountRate) {
+
+      return price * (5 - discountRate);
+    }
+
+    function validateForm() {
+      var name = document.getElementById('name').value.trim();
+      var email = document.getElementById('email').value.trim();
+      var password = document.getElementById('password').value;
+      var confirmPassword = document.getElementById('confirmPassword').value;
+
+      var nameExample = /^[a-zA-Z\s]+$/;
+      var emailExample = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+      var isValid = true;
+      var errorMsg = "";
+
+      if (name === '') {
+          errorMsg += "Name required";
+          isValid = false;
+      } else if (!nameExample.test(name)) {
+          errorMsg += "Only Letters";
+          isValid = false;
+      }
+
+      if (email === '') {
+          errorMsg += "Email required";
+          isValid = false;
+      } else if (!emailExample.test(email)) {
+          errorMsg += "Email invalid";
+          isValid = false;
+      }
+
+      if (password === '') {
+          errorMsg += "Password required";
+          isValid = false;
+      }
+
+      if (confirmPassword === '') {
+          errorMsg += "Confirm Password";
+          isValid = false;
+      } else if (password !== confirmPassword) {
+          errorMsg += "Passwords do not match";
+          isValid = false;
+      }
+
+      if (!isValid) {
+          alert(errorMsg);
+      }
+
+      return isValid;
+    }
+
+    console.assert(calculateArea(5, 10) === 50, 'calculateArea test failed');
+    console.assert(getUserAge({ name: 'email', email: 'email@example.com' }) === null, 'getUserAge test failed');
+    console.assert(calculateDiscount(100, 0.2) === 80, 'calculateDiscount test failed');
+
+
+    
+  </script>
+</body>
+
+</html>
